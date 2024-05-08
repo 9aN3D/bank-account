@@ -1,6 +1,5 @@
 package com.techbank.account.cmd.domain;
 
-import com.techbank.account.cmd.api.commands.CloseAccountCommand;
 import com.techbank.account.cmd.api.commands.OpenAccountCommand;
 import com.techbank.account.common.events.AccountClosedEvent;
 import com.techbank.account.common.events.AccountOpenedEvent;
