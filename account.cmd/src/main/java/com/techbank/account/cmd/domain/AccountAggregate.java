@@ -7,10 +7,12 @@ import com.techbank.account.common.events.FundsDepositedEvent;
 import com.techbank.account.common.events.FundsWithdrawnEvent;
 import com.techbank.cqrs.core.domain.AggregateRoot;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class AccountAggregate extends AggregateRoot {
 
