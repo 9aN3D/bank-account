@@ -6,12 +6,20 @@
 
     <groupId>com.techbank</groupId>
     <artifactId>bank-account</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <modules>
+        <module>../cqrs-es/cqrs.core</module>
+        <module>account.common</module>
+        <module>account.cmd</module>
+        <module>account.query</module>
+    </modules>
 
 </project>
