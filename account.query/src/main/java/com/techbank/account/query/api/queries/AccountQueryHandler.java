@@ -1,8 +1,8 @@
 package com.techbank.account.query.api.queries;
 
 import com.techbank.account.query.api.dto.EqualityType;
+import com.techbank.account.query.api.exceptions.AccountNotFoundException;
 import com.techbank.account.query.domain.AccountRepository;
-import com.techbank.account.query.domain.BankAccount;
 import com.techbank.cqrs.core.domain.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,7 +24,7 @@ public class AccountQueryHandler implements QueryHandler {
 
         var result = accountRepository.findByAccountHolder(query.getAccountHolder())
                 .map(List::of)
-                .orElseGet(ArrayList::new);
+                .orElseThrow(() -> new AccountNotFoundException(query));
 
         log.info("Got by FindAccountByHolderQuery {query: {}, resultSize: {}}", query, result.size());
         return new ArrayList<>(result);
@@ -37,7 +36,7 @@ public class AccountQueryHandler implements QueryHandler {
 
         var result = accountRepository.findById(query.getId())
                 .map(List::of)
-                .orElseGet(ArrayList::new);
+                .orElseThrow(() -> new AccountNotFoundException(query));
 
         log.info("Got by FindAccountByIdQuery {query: {}, resultSize: {}}", query, result.size());
         return new ArrayList<>(result);

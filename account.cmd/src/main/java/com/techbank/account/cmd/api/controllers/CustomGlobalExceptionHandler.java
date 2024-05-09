@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
@@ -23,7 +21,7 @@ import java.util.logging.Logger;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final Logger logger = Logger.getLogger(OpenAccountController.class.getName());
+    private final Logger logger = Logger.getLogger(CustomGlobalExceptionHandler.class.getName());
 
     @ExceptionHandler(AggregateNotFoundException.class)
     public ResponseEntity<BaseResponse> customHandleNotFound(Exception ex, WebRequest request) {

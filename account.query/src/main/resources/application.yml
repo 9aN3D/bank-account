@@ -25,3 +25,7 @@ spring:
           json:
             trusted:
               packages: '*'
+
+techbank:
+  openapi:
+    dev-url: http://localhost:${server.port}

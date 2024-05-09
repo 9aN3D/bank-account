@@ -15,4 +15,4 @@ spring:
 
 techbank:
   openapi:
-    dev-url: http://localhost:5010
+    dev-url: http://localhost:${server.port}
