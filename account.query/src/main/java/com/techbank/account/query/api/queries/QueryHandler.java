@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface QueryHandler {
 
-    List<BaseEntity> hande(FindAccountByHolderQuery query);
+    List<BaseEntity> handle(FindAccountByHolderQuery query);
 
-    List<BaseEntity> hande(FindAccountByIdQuery query);
+    List<BaseEntity> handle(FindAccountByIdQuery query);
 
-    List<BaseEntity> hande(FindAccountWithBalanceQuery query);
+    List<BaseEntity> handle(FindAccountWithBalanceQuery query);
 
-    List<BaseEntity> hande(FindAllAccountsQuery query);
+    List<BaseEntity> handle(FindAllAccountsQuery query);
 
 }

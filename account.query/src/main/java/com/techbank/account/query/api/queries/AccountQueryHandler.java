@@ -20,7 +20,7 @@ public class AccountQueryHandler implements QueryHandler {
     private final AccountRepository accountRepository;
 
     @Override
-    public List<BaseEntity> hande(FindAccountByHolderQuery query) {
+    public List<BaseEntity> handle(FindAccountByHolderQuery query) {
         log.trace("Getting by FindAccountByHolderQuery {query: {}}", query);
 
         var result = accountRepository.findByAccountHolder(query.getAccountHolder())
@@ -32,7 +32,7 @@ public class AccountQueryHandler implements QueryHandler {
     }
 
     @Override
-    public List<BaseEntity> hande(FindAccountByIdQuery query) {
+    public List<BaseEntity> handle(FindAccountByIdQuery query) {
         log.trace("Getting by FindAccountByIdQuery {query: {}}", query);
 
         var result = accountRepository.findById(query.getId())
@@ -44,20 +44,19 @@ public class AccountQueryHandler implements QueryHandler {
     }
 
     @Override
-    public List<BaseEntity> hande(FindAccountWithBalanceQuery query) {
+    public List<BaseEntity> handle(FindAccountWithBalanceQuery query) {
         log.trace("Getting by FindAccountWithBalanceQuery {query: {}}", query);
 
-        var bankAccounts = query.getEqualityType() == EqualityType.GREATER_THAN
+        var result = query.getEqualityType() == EqualityType.GREATER_THAN
                 ? accountRepository.findByBalanceGreaterThan(query.getBalance())
                 : accountRepository.findByBalanceLessThan(query.getBalance());
-        var result = new ArrayList<>(bankAccounts);
 
         log.info("Got by FindAccountWithBalanceQuery {query: {}, resultSize: {}}", query, result.size());
         return result;
     }
 
     @Override
-    public List<BaseEntity> hande(FindAllAccountsQuery query) {
+    public List<BaseEntity> handle(FindAllAccountsQuery query) {
         log.trace("Getting by FindAllAccountsQuery");
 
         var bankAccounts = accountRepository.findAll();
