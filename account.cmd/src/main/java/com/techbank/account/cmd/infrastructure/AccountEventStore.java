@@ -55,7 +55,7 @@ public class AccountEventStore implements EventStore {
 
         var eventStoreList = eventStoreRepository.findByAggregateIdentifier(aggregateId);
         if (isNull(eventStoreList) || eventStoreList.isEmpty()) {
-            throw new AggregateNotFoundException("Incorrect account ID provided");
+            throw new AggregateNotFoundException(String.format("Incorrect account ID provided, %s", aggregateId));
         }
         var result = eventStoreList.stream()
                 .map(EventModel::getEventData)

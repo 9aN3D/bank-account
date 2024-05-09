@@ -1,5 +1,7 @@
 package com.techbank.account.cmd.api.controllers;
 
+import com.techbank.account.common.dto.BaseResponse;
+import com.techbank.account.common.dto.ErrorResponse;
 import com.techbank.cqrs.core.exceptions.AggregateNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
@@ -25,21 +26,21 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     private final Logger logger = Logger.getLogger(OpenAccountController.class.getName());
 
     @ExceptionHandler(AggregateNotFoundException.class)
-    public void springHandleNotFound(HttpServletResponse response) throws IOException {
-        logger.log(Level.WARNING, "Resource is not found");
-        response.sendError(HttpStatus.NOT_FOUND.value());
+    public ResponseEntity<BaseResponse> customHandleNotFound(Exception ex, WebRequest request) {
+        logger.log(Level.WARNING, ex.getMessage());
+
+        var httpStatus = HttpStatus.NOT_FOUND;
+        return buildResponse(ex, httpStatus);
+
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public void springHandleBadRequest(HttpServletResponse response) throws IOException {
-        logger.log(Level.WARNING, "Client made a bad request");
-        response.sendError(HttpStatus.BAD_REQUEST.value());
-    }
+    public ResponseEntity<BaseResponse> customHandleBadRequest(Exception ex, WebRequest request) {
+        logger.log(Level.WARNING, ex.getMessage());
 
-/*    @ExceptionHandler(ConstraintViolationException.class)
-    public void constraintViolationException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value());
-    }*/
+        var httpStatus = HttpStatus.BAD_REQUEST;
+        return buildResponse(ex, httpStatus);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -57,6 +58,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("errors", errors);
 
         return new ResponseEntity<>(body, headers, status);
+    }
+
+    private ResponseEntity<BaseResponse> buildResponse(Exception ex, HttpStatus httpStatus) {
+        var response = new ErrorResponse();
+        response.setTimestamp(new Date());
+        response.setError(httpStatus.getReasonPhrase());
+        response.setMessage(ex.getMessage());
+        response.setStatus(httpStatus.value());
+
+        return new ResponseEntity<>(response, httpStatus);
     }
 
 }
