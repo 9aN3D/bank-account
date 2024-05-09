@@ -30,4 +30,14 @@ public class BankAccount extends BaseEntity {
 
     private BigDecimal balance;
 
+    public BankAccount depositFunds(BigDecimal amount) {
+        this.balance = balance.add(amount);
+        return this;
+    }
+
+    public BankAccount withdrawFunds(BigDecimal amount) {
+        this.balance = balance.subtract(amount);
+        return this;
+    }
+
 }
